@@ -1,7 +1,7 @@
 
 /*
 Modified by : Sebastiann Monungolh
-Date        : August 27, 2024 (8/27/24)
+Date        : August 28, 2024
 */
 
 //
@@ -260,7 +260,6 @@ void init_opengl(void)
 
 void physics()
 {
-	//No physics yet.
 	g.pos[0] += g.vel;
 	if (g.pos[0] >= (g.xres - g.w)) {
 		g.pos[0] = (g.xres - g.w);
@@ -270,6 +269,10 @@ void physics()
 		g.pos[0] = g.w;
 		g.vel = -g.vel;
 	}
+
+	/* As box bounces more frequently, box color turns red  */
+
+	/* As box bounces less frequently, box color turns blue */
 }
 
 void render()
@@ -278,7 +281,14 @@ void render()
 	glClear(GL_COLOR_BUFFER_BIT);
 	//draw the box
 	glPushMatrix();
-	glColor3ub(100, 120, 220);
+	/* If window width becomes smaller than box width, */
+	/* make the box dissapear */
+	if (g.xres < 2 * g.w) {
+	    	/* cout << "window smaller than box" << endl; */
+	    	glColor3ub(0, 0, 0);
+	} else {
+	    	glColor3ub(100, 120, 220);
+	}
 	glTranslatef(g.pos[0], g.pos[1], 0.0f);
 	glBegin(GL_QUADS);
 		glVertex2f(-g.w, -g.w);
