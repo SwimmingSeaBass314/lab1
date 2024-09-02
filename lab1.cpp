@@ -279,24 +279,21 @@ void render()
 {
 	//
 	glClear(GL_COLOR_BUFFER_BIT);
-	//draw the box
-	glPushMatrix();
-	/* If window width becomes smaller than box width, */
-	/* make the box dissapear */
-	if (g.xres < 2 * g.w) {
-	    	/* cout << "window smaller than box" << endl; */
-	    	glColor3ub(0, 0, 0);
-	} else {
-	    	glColor3ub(100, 120, 220);
+	/* If window width is larger than box width, draw the box */
+	if (g.xres > 2 * g.w) {
+		glPushMatrix();
+		glColor3ub(100, 120, 220);
+		glTranslatef(g.pos[0], g.pos[1], 0.0f);
+		glBegin(GL_QUADS);
+			glVertex2f(-g.w, -g.w);
+			glVertex2f(-g.w,  g.w);
+			glVertex2f( g.w,  g.w);
+			glVertex2f( g.w, -g.w);
+		glEnd();
+		glPopMatrix();
 	}
-	glTranslatef(g.pos[0], g.pos[1], 0.0f);
-	glBegin(GL_QUADS);
-		glVertex2f(-g.w, -g.w);
-		glVertex2f(-g.w,  g.w);
-		glVertex2f( g.w,  g.w);
-		glVertex2f( g.w, -g.w);
-	glEnd();
-	glPopMatrix();
+	/* Otherwise, make box disappear */
+	// cout << "window smaller than box" << endl;
 }
 
 
