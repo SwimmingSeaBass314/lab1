@@ -270,23 +270,16 @@ void physics()
 	if (g.pos[0] >= (g.xres - g.w)) {
 		g.pos[0] = (g.xres - g.w);
 		g.vel = -g.vel;
-		g.red = 200;
-		g.green = 0;
-		g.blue = 0;
+		g.red = 255;
+		//g.green = 0;
+		//g.blue = 0;
 	}
 	if (g.pos[0] <= g.w) {
 		g.pos[0] = g.w;
 		g.vel = -g.vel;
-		g.red = 200;
-		g.green = 0;
-		g.blue = 0;
-	}
-	/* As box bounces more frequently, box color turns red  */
-	/* As box bounces less frequently, box color turns blue */
-	if (g.green < 255 && g.blue < 255) {
-		g.red -= 5;
-		g.green += 3;
-		g.blue += 3;
+		g.red = 255;
+		//g.green = 0;
+		//g.blue = 0; 
 	}
 }
 
@@ -297,6 +290,15 @@ void render()
 	if (g.xres > 2 * g.w) {
 		glPushMatrix();
 		glColor3ub(g.red, g.green, g.blue);
+
+		/* As box bounces more frequently, box color turns red  */
+		/* As box bounces less frequently, box color turns blue */
+		if (g.red - 10 > 200) {
+			g.red -= 10;
+		} else {
+			g.red = 100;
+		}
+
 		glTranslatef(g.pos[0], g.pos[1], 0.0f);
 		glBegin(GL_QUADS);
 			glVertex2f(-g.w, -g.w);
@@ -307,7 +309,6 @@ void render()
 		glPopMatrix();
 	}
 	/* Otherwise, make box disappear */
-
 	// cout << "window smaller than box" << endl;
 }
 
